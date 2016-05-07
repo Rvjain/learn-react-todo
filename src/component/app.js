@@ -26,7 +26,7 @@ export default class App extends React.Component{
         return (
             <div>
                 <h1>React TODOs List</h1>
-                <CreateTodo addTodo = {this.addTodo.bind(this)}/>
+                <CreateTodo todos={this.state.todos} addTodo = {this.addTodo.bind(this)}/>
                 <TodosList
                     todos = {this.state.todos}
                     onTaskClick = {this.onTaskClick.bind(this)}
@@ -38,13 +38,8 @@ export default class App extends React.Component{
     }
 
     addTodo(task){
-        const todo = _.find(this.state.todos, todo => todo.task === task);
-        if(todo){
-
-        }else{
-            this.state.todos.push({task, isCompleted:false});
-            this.setState({todos: this.state.todos});
-        }
+        this.state.todos.push({task, isCompleted:false});
+        this.setState({todos: this.state.todos});
     }
 
     onTaskClick(task){
