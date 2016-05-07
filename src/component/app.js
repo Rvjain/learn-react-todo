@@ -1,6 +1,7 @@
 import React from 'react';
 import TodosList from './TodosList';
 import CreateTodo from './CreateTodo';
+import _ from 'lodash';
 const todos = [
     {
         task:'make react app',
@@ -26,14 +27,24 @@ export default class App extends React.Component{
             <div>
                 <h1>React TODOs List</h1>
                 <CreateTodo addTodo = {this.addTodo.bind(this)}/>
-                <TodosList todos = {this.state.todos}  onTaskClick = {this.onTaskClick.bind(this)} saveTask={this.saveTask.bind(this)}/>
+                <TodosList
+                    todos = {this.state.todos}
+                    onTaskClick = {this.onTaskClick.bind(this)}
+                    saveTask={this.saveTask.bind(this)}
+                    onDeleteTask = {this.onDeleteTask.bind(this)}
+                />
             </div>
         )
     }
 
     addTodo(task){
-        this.state.todos.push({task, isCompleted:false});
-        this.setState({todos: this.state.todos});
+        const todo = _.find(this.state.todos, todo => todo.task === task);
+        if(todo){
+
+        }else{
+            this.state.todos.push({task, isCompleted:false});
+            this.setState({todos: this.state.todos});
+        }
     }
 
     onTaskClick(task){
@@ -45,6 +56,11 @@ export default class App extends React.Component{
     saveTask(oldTask, newTask){
         const oldTodo = _.find(this.state.todos, todo => todo.task === oldTask);
         oldTodo.task = newTask;
+        this.setState({todos : this.state.todos});
+    }
+
+    onDeleteTask(task){
+        _.remove(this.state.todos, todo => todo.task === task);
         this.setState({todos : this.state.todos});
     }
 }

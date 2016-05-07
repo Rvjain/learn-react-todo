@@ -20,7 +20,7 @@ export default class TodosListItem extends React.Component{
         return (
             <td>
                 <button onClick={this.onEditClick.bind(this)}>Edit</button>
-                <button>Delete</button>
+                <button onClick={this.onDeleteClick.bind(this)}>Delete</button>
             </td>
         );
 
@@ -75,4 +75,12 @@ export default class TodosListItem extends React.Component{
         this.setState({isEditing:false});
 
     }
+
+    onDeleteClick(event){
+        event.preventDefault();
+        const task = this.props.task;
+        this.props.onDeleteTask(task);
+    }
+
+
 }
